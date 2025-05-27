@@ -8,11 +8,11 @@ import { ArrowRight, Film, Book, Music } from "lucide-react";
 import { useEffect } from "react";
 import { sdk } from "@farcaster/frame-sdk";
 
-useEffect(() => {
-  sdk.actions.ready();
-}, []);
-
 export default function Home() {
+  useEffect(() => {
+    sdk.actions.ready();
+  }, []);
+
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Hero Section */}
