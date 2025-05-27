@@ -5,6 +5,12 @@ import { Card } from "@/components/ui/card";
 import { FeaturedProjects } from "@/components/featured-projects";
 import Link from "next/link";
 import { ArrowRight, Film, Book, Music } from "lucide-react";
+import { useEffect } from "react";
+import { sdk } from "@farcaster/frame-sdk";
+
+useEffect(() => {
+  sdk.actions.ready();
+}, []);
 
 export default function Home() {
   return (
