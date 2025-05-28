@@ -1,82 +1,92 @@
-"use client";
+// components/MyProjects.tsx
+import { Upload, Users, Calendar } from 'lucide-react';
 
-import Link from "next/link";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-
-interface Project {
-  id: string;
+const ProjectCard = ({
+  image,
+  title,
+  ethRaised,
+  thresholdPercent,
+  thresholdTarget,
+  deliveryDate,
+  status,
+}: {
+  image: string;
   title: string;
-  description: string;
-  status: "draft" | "live" | "completed";
-  progress: number;
-}
+  ethRaised: string;
+  thresholdPercent: string;
+  thresholdTarget: string;
+  deliveryDate: string;
+  status: string;
+}) => (
+  <div className="rounded-lg border overflow-hidden bg-card text-card-foreground shadow-sm">
+    <div className="relative">
+      <img src={image} alt={title} className="w-full aspect-video object-cover" />
+      <div className="absolute top-2 right-2">
+        <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-green-500 text-primary-foreground">
+          {status}
+        </div>
+      </div>
+    </div>
+    <div className="p-4">
+      <h3 className="text-lg font-semibold mb-2">{title}</h3>
+      <div className="space-y-3 mb-4">
+        <div className="flex items-center justify-between text-sm">
+          <span className="text-muted-foreground">ETH Raised</span>
+          <span className="font-medium">{ethRaised}</span>
+        </div>
+        <div className="space-y-1">
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-muted-foreground">Threshold Progress</span>
+            <span className="font-medium">{thresholdPercent}</span>
+          </div>
+          <div className="relative h-4 overflow-hidden rounded-full bg-secondary w-full">
+            <div className="h-full w-full bg-primary transition-all" />
+          </div>
+          <div className="text-xs text-muted-foreground">{thresholdTarget}</div>
+        </div>
+        <div className="flex items-center justify-between text-sm">
+          <span className="text-muted-foreground">Delivery Date</span>
+          <div className="flex items-center gap-1">
+            <Calendar className="h-3 w-3" />
+            <span>{deliveryDate}</span>
+          </div>
+        </div>
+      </div>
+      <div className="space-y-2">
+        <button className="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full">
+          <Upload className="mr-2 h-4 w-4" />
+          Upload Deliverable
+        </button>
+        <button className="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium border bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-full">
+          <Users className="mr-2 h-4 w-4" />
+          Request Extension
+        </button>
+      </div>
+    </div>
+  </div>
+);
 
-const mockProjects: Project[] = [
-  {
-    id: "1",
-    title: "ZK Messaging App",
-    description: "A private Farcaster frame for anonymous feedback.",
-    status: "live",
-    progress: 75,
-  },
-  {
-    id: "2",
-    title: "Onchain Roast Battles",
-    description: "Farcaster mini-app for onchain battle tournaments.",
-    status: "draft",
-    progress: 30,
-  },
-  {
-    id: "3",
-    title: "Melobanc Creator Hub",
-    description: "Platform for web3 music creators to showcase work.",
-    status: "completed",
-    progress: 100,
-  },
-];
+export const MyProjects = () => {
+  const projects = [
+    {
+      image: 'https://arrowheads-timer.lovable.app/lovable-uploads/70a0a04f-7986-4605-8852-902d239bafc3.png',
+      title: 'Digital Art Genesis Collection',
+      ethRaised: '2.4 ETH',
+      thresholdPercent: '120%',
+      thresholdTarget: '2.4 / 2.0 ETH',
+      deliveryDate: '3/1/2025',
+      status: 'Threshold Met',
+    },
+  ];
 
-const statusColorMap: Record<Project["status"], string> = {
-  draft: "bg-yellow-100 text-yellow-800",
-  live: "bg-green-100 text-green-800",
-  completed: "bg-blue-100 text-blue-800",
-};
-
-export function MyProjects() {
   return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {mockProjects.map((project) => (
-        <Card key={project.id} className="p-5 flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="text-lg font-semibold">{project.title}</h3>
-              <Badge className={statusColorMap[project.status]}>
-                {project.status}
-              </Badge>
-            </div>
-            <p className="text-muted-foreground text-sm mb-4">
-              {project.description}
-            </p>
-            <div className="mb-4">
-              <Progress value={project.progress} />
-              <p className="text-xs mt-1">{project.progress}% complete</p>
-            </div>
-          </div>
-          <div className="flex justify-between items-center mt-auto">
-            <Avatar className="h-6 w-6">
-              <AvatarFallback>
-                {project.title.slice(0, 2).toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-            <Button size="sm" variant="outline" asChild>
-              <Link href={`/projects/${project.id}`}>Manage</Link>
-            </Button>
-          </div>
-        </Card>
-      ))}
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold mb-4">My Projects ({projects.length})</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {projects.map((p, idx) => (
+          <ProjectCard key={idx} {...p} />
+        ))}
+      </div>
     </div>
   );
-}
+};
