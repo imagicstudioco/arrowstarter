@@ -14,7 +14,7 @@
       "webhookUrl": "https://arrowstarter.vercel.app/api/webhook",
       "subtitle": "Provide early stage support for ambitious creative projects",
       "description": "A lightweight Kickstarter-style launchpad for ambitious creative projects—designed for early-stage support, with built-in trust and upside.",
-      "ogImageUrl": "https://arrowstarter.app/og-image.png"
+      "ogImageUrl": "https://arrowstarter.vercel.app/og-image.png"
     }
   }
   
