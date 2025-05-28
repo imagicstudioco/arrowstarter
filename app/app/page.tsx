@@ -14,6 +14,16 @@ export default function Home() {
     sdk.actions.ready();
   }, []);
 
+  const handleAddMiniApp = async () => {
+    try {
+      await sdk.actions.addMiniApp();
+      console.log("Mini app added successfully");
+    } catch (error) {
+      console.error("Failed to add mini app:", error);
+    }
+  };
+
+
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Hero Section */}

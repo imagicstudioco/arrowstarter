@@ -11,6 +11,7 @@
   "dependencies": {
     "@coinbase/onchainkit": "^0.35.8",
     "@farcaster/frame-sdk": "^0.0.52",
+    "@farcaster/frame-wagmi-connector": "^0.0.42",
     "@hookform/resolvers": "^3.3.4",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",

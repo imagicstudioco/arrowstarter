@@ -8,8 +8,10 @@ export const config = createConfig({
   chains: [base, baseSepolia],
   connectors: [
     coinbaseWallet({
-      appName: "OnchainRaiser",
-      preference: 'all',
+      appName: "Arrow Starter",
+      preference: {
+        options: 'all', // Options: 'all', 'eoaOnly', 'smartWalletOnly'
+      },
       version: '4',
     }),
   ],
