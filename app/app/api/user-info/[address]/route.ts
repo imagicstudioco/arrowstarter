@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import { API_BASE_URL } from '@/app/config';
 
+// Required for static export with dynamic routes
+export async function generateStaticParams() {
+  return [];
+}
+
 export async function GET(
   request: Request,
   { params }: { params: { address: string } }
