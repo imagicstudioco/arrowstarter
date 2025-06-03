@@ -4,12 +4,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { useAccount, useConnect } from "wagmi";
 import { ThemeToggle } from "@/components/theme-toggle";
+import CreateProjectForm from "@/components/createprojectform";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
 export function Navbar() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+
 
   function truncateAddress(address: string) {
     return `${address.slice(0, 4)}...${address.slice(-3)}`;
@@ -84,12 +87,23 @@ export function Navbar() {
 
           {/* Right Side */}
           <div className="flex items-center space-x-4">
-            <button className="create-btn hidden sm:inline-flex">
-              <svg className="lucide h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            {/* Create Project */}
+            <button 
+              onClick={() => setShowCreateModal(true)}
+              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 gap-2"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="lucide h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
                 <path d="M5 12h14" />
                 <path d="M12 5v14" />
               </svg>
-              <span>Create Project</span>
+              <span className="hidden sm:inline">Create Project</span>
             </button>
 
             <div className="inline-flex items-center rounded-full border text-xs font-semibold text-foreground gap-1 px-3 py-1">
@@ -104,6 +118,9 @@ export function Navbar() {
           </div>
         </div>
       </header>
+      {showCreateModal && (
+        <CreateProjectForm onClose={() => setShowCreateModal(false)} />
+      )}
     </>
   );
 }

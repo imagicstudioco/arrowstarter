@@ -1,5 +1,9 @@
-// components/MyProjects.tsx
+"use client";
+
+import { useEffect, useState } from 'react';
 import { Upload, Users, Calendar } from 'lucide-react';
+import { useAccount } from 'wagmi';
+import { Project, getUserProjects } from '@/lib/api';
 
 const ProjectCard = ({
   image,
@@ -20,13 +24,14 @@ const ProjectCard = ({
 }) => (
   <div className="rounded-lg border overflow-hidden bg-card text-card-foreground shadow-sm">
     <div className="relative">
-      <img src={image} alt={title} className="w-full aspect-video object-cover" />
+      <img src={image || "/placeholder.png"} alt={title} className="w-full aspect-video object-cover" />
       <div className="absolute top-2 right-2">
         <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-green-500 text-primary-foreground">
           {status}
         </div>
       </div>
     </div>
+    
     <div className="p-4">
       <h3 className="text-lg font-semibold mb-2">{title}</h3>
       <div className="space-y-3 mb-4">
@@ -67,24 +72,88 @@ const ProjectCard = ({
 );
 
 export const MyProjects = () => {
-  const projects = [
-    {
-      image: 'https://arrowheads-timer.lovable.app/lovable-uploads/70a0a04f-7986-4605-8852-902d239bafc3.png',
-      title: 'Digital Art Genesis Collection',
-      ethRaised: '2.4 ETH',
-      thresholdPercent: '120%',
-      thresholdTarget: '2.4 / 2.0 ETH',
-      deliveryDate: '3/1/2025',
-      status: 'Threshold Met',
-    },
-  ];
+  const { address } = useAccount();
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      if (!address) {
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const data = await getUserProjects(address);
+        setProjects(data);
+      } catch (err) {
+        setError("Failed to load your projects");
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, [address]);
+
+  if (!address) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-muted-foreground">Please connect your wallet to view your projects</p>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {[...Array(3)].map((_, i) => (
+          <div key={i} className="rounded-lg border overflow-hidden bg-card text-card-foreground shadow-sm animate-pulse">
+            <div className="aspect-video bg-muted" />
+            <div className="p-4 space-y-4">
+              <div className="h-4 bg-muted rounded w-3/4" />
+              <div className="h-4 bg-muted rounded w-1/2" />
+              <div className="h-4 bg-muted rounded w-2/3" />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-destructive">{error}</p>
+      </div>
+    );
+  }
+
+  if (projects.length === 0) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-muted-foreground">You haven't created any projects yet</p>
+      </div>
+    );
+  }
 
   return (
     <div className="mb-8">
       <h2 className="text-2xl font-bold mb-4">My Projects ({projects.length})</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projects.map((p, idx) => (
-          <ProjectCard key={idx} {...p} />
+        {projects.map((project) => (
+          <ProjectCard
+            key={project.id}
+            image={project.image || "/placeholder.png"}
+            title={project.title}
+            ethRaised={`${project.raised} ETH`}
+            thresholdPercent={`${Math.round((project.raised / project.goal) * 100)}%`}
+            thresholdTarget={`${project.raised} / ${project.goal} ETH`}
+            deliveryDate={new Date(project.createdAt).toLocaleDateString()}
+            status={project.status}
+          />
         ))}
       </div>
     </div>
