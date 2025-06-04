@@ -10,7 +10,7 @@
       "homeUrl": "https://arrowstarter.vercel.app",
       "iconUrl": "https://arrowstarter.vercel.app/icon.png",
       "splashImageUrl": "https://arrowstarter.vercel.app/splash.png",
-      "splashBackgroundColor": "#eeccff",
+      "splashBackgroundColor": "#EECCFF",
       "webhookUrl": "https://arrowstarter.vercel.app/api/webhook",
       "subtitle": "Provide early stage support for ambitious creative projects",
       "description": "A lightweight Kickstarter-style launchpad for ambitious creative projects—designed for early-stage support, with built-in trust and upside.",
