@@ -65,10 +65,12 @@ export function Projects() {
             className="rounded-lg border overflow-hidden bg-card text-card-foreground shadow-sm hover:shadow-lg transition-shadow"
           >
             <div className="relative">
-              <img
+              <Image
                 src={project.image || "/placeholder.png"}
                 alt={project.title}
                 className="w-full aspect-video object-cover"
+                width={800}
+                height={450}
               />
               <div className="absolute top-3 right-3">
                 <span

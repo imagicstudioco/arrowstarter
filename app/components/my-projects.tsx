@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Upload, Users, Calendar } from 'lucide-react';
 import { useAccount } from 'wagmi';
 import { Project, getUserProjects } from '@/lib/api';
+import Image from 'next/image';
 
 const ProjectCard = ({
   image,
@@ -24,7 +25,13 @@ const ProjectCard = ({
 }) => (
   <div className="rounded-lg border overflow-hidden bg-card text-card-foreground shadow-sm">
     <div className="relative">
-      <img src={image || "/placeholder.png"} alt={title} className="w-full aspect-video object-cover" />
+      <Image 
+        src={image || "/placeholder.png"} 
+        alt={title} 
+        className="w-full aspect-video object-cover"
+        width={800}
+        height={450}
+      />
       <div className="absolute top-2 right-2">
         <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-green-500 text-primary-foreground">
           {status}
@@ -134,7 +141,7 @@ export const MyProjects = () => {
   if (projects.length === 0) {
     return (
       <div className="text-center py-8">
-        <p className="text-muted-foreground">You haven't created any projects yet</p>
+        <p className="text-muted-foreground">You haven&apos;t created any projects yet</p>
       </div>
     );
   }
