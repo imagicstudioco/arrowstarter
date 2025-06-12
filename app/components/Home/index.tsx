@@ -2,9 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, Film, Book, Music } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Projects } from "@/components/projects";
 import { HeroFeatured } from "@/components/hero-featured";
 import { sdk } from "@farcaster/frame-sdk";
@@ -13,15 +11,6 @@ export default function Home() {
   useEffect(() => {
     sdk.actions.ready();
   }, []);
-
-  const handleAddMiniApp = async () => {
-    try {
-      await sdk.actions.addMiniApp();
-      console.log("Mini app added successfully");
-    } catch (error) {
-      console.error("Failed to add mini app:", error);
-    }
-  };
 
 
   return (

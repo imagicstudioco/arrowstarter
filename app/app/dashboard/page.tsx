@@ -1,9 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { MyProjects } from "@/components/my-projects";
 import { BackedProjects } from "@/components/backed-projects";
 import { sdk } from "@farcaster/frame-sdk";
