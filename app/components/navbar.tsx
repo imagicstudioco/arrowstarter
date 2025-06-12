@@ -71,7 +71,7 @@ export function Navbar() {
               <Menu className="h-5 w-5" />
             </button>
             <Link href="/" className="flex items-center space-x-2">
-              <Image src="/logo.png" alt="Logo" width={32} height={32} />
+              <Image src="/images/logo.png" alt="Logo" width={32} height={32} />
             </Link>
 
             {/* Desktop Navigation */}

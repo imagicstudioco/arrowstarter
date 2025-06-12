@@ -1,13 +1,10 @@
-import {
-  setUserNotificationDetails,
-  deleteUserNotificationDetails,
-} from "@/lib/notification";
 import { sendFrameNotification } from "@/lib/notification-client";
-import { http } from "viem";
-import { createPublicClient } from "viem";
+import {
+  deleteUserNotificationDetails,
+  setUserNotificationDetails,
+} from "@/lib/notifications";
+import { createPublicClient, http } from "viem";
 import { optimism } from "viem/chains";
-
-const appName = process.env.NEXT_PUBLIC_ONCHAINKIT_PROJECT_NAME;
 
 const KEY_REGISTRY_ADDRESS = "0x00000000Fc1237824fb747aBDE0FF18990E59b7e";
 
@@ -73,7 +70,7 @@ export async function POST(request: Request) {
   if (!valid) {
     return Response.json(
       { success: false, error: "Invalid FID ownership" },
-      { status: 401 },
+      { status: 401 }
     );
   }
 
@@ -82,14 +79,14 @@ export async function POST(request: Request) {
       console.log(
         "frame_added",
         "event.notificationDetails",
-        event.notificationDetails,
+        event.notificationDetails
       );
       if (event.notificationDetails) {
         await setUserNotificationDetails(fid, event.notificationDetails);
         await sendFrameNotification({
           fid,
-          title: `Welcome to ${appName}`,
-          body: `Thank you for adding ${appName}`,
+          title: `Welcome to Farcaster Mini App Template`,
+          body: `Thank you for adding Farcaster Mini App Template`,
         });
       } else {
         await deleteUserNotificationDetails(fid);
@@ -106,8 +103,8 @@ export async function POST(request: Request) {
       await setUserNotificationDetails(fid, event.notificationDetails);
       await sendFrameNotification({
         fid,
-        title: `Welcome to ${appName}`,
-        body: `Thank you for enabling notifications for ${appName}`,
+        title: `Welcome to Farcaster Mini App Template`,
+        body: `Thank you for enabling notifications for Farcaster Mini App Template`,
       });
 
       break;
