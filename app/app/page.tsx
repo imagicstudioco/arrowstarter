@@ -21,10 +21,10 @@ const frame = {
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Mini-app Starter",
+    title: "Arrow Starter - Provide early stage support for ambitious creative projects",
     openGraph: {
-      title: "Mini-app Starter",
-      description: "A starter for Farcastermini-apps",
+      title: "Arrow Starter - Provide early stage support for ambitious creative projects",
+  description: "A lightweight Kickstarter-style launchpad for ambitious creative projects—designed for early-stage support, with built-in trust and upside.",
     },
     other: {
       "fc:frame": JSON.stringify(frame),
