@@ -2,7 +2,6 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
 import Image from "next/image";
-import campaignsData from "@/data/campaigns.json";
 
 interface Campaign {
   id: number;
