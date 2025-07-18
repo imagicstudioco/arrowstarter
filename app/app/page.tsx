@@ -1,37 +1,44 @@
-import App from "@/components/App";
-import { env } from "@/lib/env";
-import { Metadata } from "next";
+"use client";
 
-const appUrl = env.NEXT_PUBLIC_URL;
-
-const frame = {
-  version: "next",
-  imageUrl: `${appUrl}/images/feed.png`,
-  button: {
-    title: "Launch App",
-    action: {
-      type: "launch_frame",
-      name: "Mini-app Starter",
-      url: appUrl,
-      splashImageUrl: `${appUrl}/images/splash.png`,
-      splashBackgroundColor: "#ffffff",
-    },
-  },
-};
-
-export async function generateMetadata(): Promise<Metadata> {
-  return {
-    title: "Arrow Starter - Provide early stage support for ambitious creative projects",
-    openGraph: {
-      title: "Arrow Starter - Provide early stage support for ambitious creative projects",
-  description: "A lightweight Kickstarter-style launchpad for ambitious creative projects—designed for early-stage support, with built-in trust and upside.",
-    },
-    other: {
-      "fc:frame": JSON.stringify(frame),
-    },
-  };
-}
+import { useEffect } from "react";
+import Link from "next/link";
+import { ArrowRight, Film, Book, Music } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Projects } from "@/components/projects";
+import { HeroFeatured } from "@/components/hero-featured";
+import { sdk } from "@farcaster/frame-sdk";
 
 export default function Home() {
-  return <App />;
+  useEffect(() => {
+    sdk.actions.ready();
+  }, []);
+
+  const handleAddMiniApp = async () => {
+    try {
+      await sdk.actions.addMiniApp();
+      console.log("Mini app added successfully");
+    } catch (error) {
+      console.error("Failed to add mini app:", error);
+    }
+  };
+
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      {/* Hero Section */}
+      <HeroFeatured />
+
+      {/* Featured Projects */}
+      <section className="mb-16 mt-12">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-3xl font-bold">Projects</h2>
+          <Button variant="ghost" asChild>
+            <Link href="/projects">View all projects</Link>
+          </Button>
+        </div>
+        <Projects />
+      </section>
+    </div>
+  );
 }

@@ -1,12 +1,11 @@
-import { getUserNotificationDetails } from "@/lib/notifications";
 import {
   FrameNotificationDetails,
   type SendNotificationRequest,
   sendNotificationResponseSchema,
 } from "@farcaster/frame-sdk";
-import { env } from "./env";
+import { getUserNotificationDetails } from "@/lib/notification";
 
-const appUrl = env.NEXT_PUBLIC_URL || "";
+const appUrl = process.env.NEXT_PUBLIC_URL || "https://arrowstarter.vercel.app";
 
 type SendFrameNotificationResult =
   | {

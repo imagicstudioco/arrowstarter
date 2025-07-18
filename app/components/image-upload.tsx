@@ -4,7 +4,6 @@ import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ImagePlus, X } from "lucide-react";
-import Image from "next/image";
 
 export function ImageUpload() {
   const [images, setImages] = useState<string[]>([]);
@@ -70,12 +69,10 @@ export function ImageUpload() {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {images.map((image, index) => (
             <div key={index} className="relative group">
-              <Image
+              <img
                 src={image}
                 alt={`Upload ${index + 1}`}
                 className="w-full h-32 object-cover rounded-lg"
-                width={400}
-                height={128}
               />
               <Button
                 variant="destructive"

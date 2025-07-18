@@ -1,9 +1,13 @@
-import Providers from "@/components/providers";
+import '@coinbase/onchainkit/styles.css'; 
+import './globals.css';
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Providers } from './providers'; 
 import "./globals.css";
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
+import { ThemeProvider } from "../components/theme-provider";
+import { Navbar } from "../components/navbar";
+import { Footer } from "../components/footer";
+import { WagmiConfigProvider } from './components/wagmi-config-provider';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,20 +16,18 @@ export const metadata: Metadata = {
   description: "A lightweight Kickstarter-style launchpad for ambitious creative projects—designed for early-stage support, with built-in trust and upside.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <Providers>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-        </Providers>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <WagmiConfigProvider>
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+          </WagmiConfigProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
-}
+}   
