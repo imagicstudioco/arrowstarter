@@ -2,9 +2,9 @@
     "version": 2,
     "name": "arrowstarter-api",
     "builds": [
-      { "src": "seed.js", "use": "@vercel/node" }
+      { "src": "index.js", "use": "@vercel/node" }
     ],
     "routes": [
-      { "src": "/(.*)", "dest": "seed.js" }
+      { "src": "/(.*)", "dest": "index.js" }
     ]
   }
