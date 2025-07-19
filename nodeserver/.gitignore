@@ -37,6 +37,4 @@ next-env.d.ts
 
 /context
 
-seed.js
-delete.js
 serviceAccountKey.json
